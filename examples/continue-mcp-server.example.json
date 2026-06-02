@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "geometry-calculator": {
+      "type": "stdio",
+      "command": "C:\\path\\to\\geometry-calculator-mcp\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "geometry_calculator_mcp"]
+    }
+  }
+}

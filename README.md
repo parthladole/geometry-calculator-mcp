@@ -21,6 +21,40 @@ geometry-calculator-mcp
 
 The server runs over stdio for local MCP hosts.
 
+## Host Configuration
+
+Use Python 3.11+ and install the project into a virtual environment:
+
+```powershell
+cd path\to\geometry-calculator-mcp
+py -3.11 -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -e .
+```
+
+Then configure your MCP host to run the server with:
+
+```powershell
+.\.venv\Scripts\python.exe -m geometry_calculator_mcp
+```
+
+### Claude Desktop
+
+Add the server to `%APPDATA%\Claude\claude_desktop_config.json`.
+
+Use `examples/claude-desktop-config.example.json` as a template and replace the `command` path with the absolute path to your virtual environment's Python executable.
+
+### Continue
+
+Create a config file such as `%USERPROFILE%\.continue\mcpServers\geometry-calculator.json`.
+
+Use `examples/continue-mcp-server.example.json` as a template and replace the `command` path with the absolute path to your virtual environment's Python executable.
+
+### Notes
+
+- Do not commit personal host config files.
+- Do not commit API keys, tokens, or machine-specific secrets.
+- Keep absolute local paths in personal config only; examples should use placeholders.
+
 ## Test
 
 ```powershell
