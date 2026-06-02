@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import argparse
+import os
 from typing import Dict, Literal, Optional
 
 from mcp.server.fastmcp import FastMCP
@@ -186,8 +188,34 @@ def validate_geometry(operation: str, payload: dict) -> dict:
     return geometry_validate_geometry(operation, payload)
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Run the Geometry Calculator MCP server.")
+    parser.add_argument(
+        "--transport",
+        choices=["stdio", "sse", "streamable-http"],
+        default=os.environ.get("GEOMETRY_MCP_TRANSPORT", "stdio"),
+        help="MCP transport to use. Defaults to stdio.",
+    )
+    parser.add_argument(
+        "--host",
+        default=os.environ.get("GEOMETRY_MCP_HOST", "127.0.0.1"),
+        help="Host for HTTP transports. Defaults to 127.0.0.1.",
+    )
+    parser.add_argument(
+        "--port",
+        type=int,
+        default=int(os.environ.get("GEOMETRY_MCP_PORT", "8000")),
+        help="Port for HTTP transports. Defaults to 8000.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
-    mcp.run(transport="stdio")
+    args = parse_args()
+    if args.transport != "stdio":
+        mcp.settings.host = args.host
+        mcp.settings.port = args.port
+    mcp.run(transport=args.transport)
 
 
 if __name__ == "__main__":

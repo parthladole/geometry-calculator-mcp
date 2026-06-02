@@ -19,7 +19,48 @@ pip install -e .
 geometry-calculator-mcp
 ```
 
-The server runs over stdio for local MCP hosts.
+The server runs over stdio by default for local MCP hosts.
+
+### Transport Modes
+
+Stdio:
+
+```powershell
+geometry-calculator-mcp
+```
+
+Streamable HTTP:
+
+```powershell
+geometry-calculator-mcp --transport streamable-http --host 127.0.0.1 --port 8000
+```
+
+Use this URL in compatible clients:
+
+```text
+http://127.0.0.1:8000/mcp
+```
+
+Legacy SSE:
+
+```powershell
+geometry-calculator-mcp --transport sse --host 127.0.0.1 --port 8000
+```
+
+Use this URL in compatible clients:
+
+```text
+http://127.0.0.1:8000/sse
+```
+
+You can also set defaults with environment variables:
+
+```powershell
+$env:GEOMETRY_MCP_TRANSPORT = "streamable-http"
+$env:GEOMETRY_MCP_HOST = "127.0.0.1"
+$env:GEOMETRY_MCP_PORT = "8000"
+geometry-calculator-mcp
+```
 
 ## Host Configuration
 
@@ -48,6 +89,13 @@ Use `examples/claude-desktop-config.example.json` as a template and replace the 
 Create a config file such as `%USERPROFILE%\.continue\mcpServers\geometry-calculator.json`.
 
 Use `examples/continue-mcp-server.example.json` as a template and replace the `command` path with the absolute path to your virtual environment's Python executable.
+
+For HTTP-capable clients, start the server separately and use:
+
+- `examples/http-streamable-client.example.json` for Streamable HTTP
+- `examples/http-sse-client.example.json` for legacy SSE
+
+Prefer Streamable HTTP for new clients. Use SSE only when a host still requires the older transport.
 
 ### Notes
 
